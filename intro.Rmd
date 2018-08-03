@@ -1,0 +1,48 @@
+---
+title: "Statistics Shiny Server"
+author: "Jonathan Marshall"
+date: "10 July 2018"
+output: html_document
+---
+
+## Introduction
+
+Statistics hosts a shiny server, available at http://shiny.massey.ac.nz/<user>, where <user> is your Massey username. e.g.
+
+http://shiny.massey.ac.nz/jcmarsha
+
+is Jonathan's - at the moment just listing some shiny apps I use for teaching. Eventually I'll put a landing page there instead, with links to the various shiny apps.
+
+This is hosted on the virtual server `tur-rstudio1.massey.ac.nz` running CentOS Linux which runs shiny-server, along with database software (mysql) and whatever else we might wish to add later on.
+
+## Connecting to the server
+
+This server is accessed via secure shell (ssh) or secure ftp (sftp) in order to place things on it, or get things running. To connect to it you'll need an ssh client (for running commands) and/or an sftp client (for copying files).
+
+Mac users and users of Windows 10 that have command line ssh/sftp installed can just use them if they wish: Just run `ssh tur-rstudio1` or `sftp tur-rstudio1` from the command line.
+
+For Windows users, the Putty and WinSCP clients might be useful. You can get them at https://www.putty.org and https://www.winscp.net. When using these apps, the server should be `tur-rstudio1`, the username should be your Massey username, and you should just use the default ports (i.e. don't change anything else).
+
+You can only connect to the server in this way from inside the Massey network - i.e. if outside, make sure you first connect to Massey via VPN.
+
+## Getting an account
+
+If you'd like an account, then just let the administrator (currently Jonathan Marshall) know and they'll add you. Once done, we recommend you ssh into the server and extract some sample applications by running
+
+```
+tar -xvf /opt/shiny-server/samples/ShinyApps.tar
+```
+
+This 'unzips' the default sample apps into a new folder `SampleApps` which is what is shared by shiny to the world.
+
+## Setting up shiny apps
+
+When you ssh or sftp into `tur-rstudio1`, you will be in your home directory. Inside that, you should have a `SampleApps` folder, and the contents of that folder is what is shown on http://shiny.massey.ac.nz/username.
+
+You can place an `index.html` in your `SampleApps` folder (or any subfolder) and it will be displayed instead, e.g. as a landing page. Shiny apps then typically go in subfolders, either using the `server.R`/`ui.R` pair, or using `app.R` if both user interface and server components are defined in the same file. You can then directly access them on http://shiny.massey.ac.nz/username/shinyappfolder.
+
+## Packages
+
+Some basic packages are available (e.g. the `tidyverse`) for all users. Anything common, that you think everyone might wish to use can be installed by the administrator - just send an email. Also, anything that requires external libraries will require installation by the administrator.
+
+Anything else can be installed locally for your user - just ssh in and then run R at the command line. Then just `install.packages` whatever you require. On first use, this will prompt you to create a local R library folder - the default location is fine. As your shiny apps run under your user account, the package will then be available to your shiny apps as well.
