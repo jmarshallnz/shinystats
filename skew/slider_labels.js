@@ -4,9 +4,9 @@ $(document).ready(function() {
   **/
 
   function returnLabels(value) {
-    if (Math.abs(value) < 2) {
+    if (Math.abs(value) < 1.5) {
       return "None";
-    } else if (Math.abs(value) > 5) {
+    } else if (Math.abs(value) > 4) {
         return (value > 0 ? "Right" : "Left");
     } else {
       return (value > 0 ? "Slight right" : "Slight left");
