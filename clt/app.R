@@ -4,6 +4,8 @@ library(sn)
 library(patchwork)
 library(broom)
 
+n_samples <- 100
+
 # generate a population with different skewness
 gen_pop <- function(skewness) {
   pop = rsn(1000, xi=0, omega=1, alpha=skewness)
