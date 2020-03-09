@@ -37,7 +37,7 @@ ui <- fluidPage(
     sidebarLayout(
       # Show a plot of the generated distribution
       mainPanel(
-        plotOutput("distPlot"),
+        plotOutput("distPlot", height="500px"),
         width=9
       ),
       sidebarPanel(
@@ -65,7 +65,7 @@ server <- function(input, output) {
     output$distPlot <- renderPlot({
       g1 <- ggplot(state()$population) + geom_line(mapping=aes(x=x, y=y)) +
         geom_segment(data=state()$population_mean, aes(x=barx, y=0, xend=barx, yend=bary), col='red') +
-        theme_minimal() + theme(axis.title = element_blank(),
+        theme_minimal(base_size=14) + theme(axis.title = element_blank(),
                                 axis.text = element_blank(),
                                 axis.ticks = element_blank()) +
         scale_x_continuous(expand=c(0,0)) +
@@ -74,7 +74,7 @@ server <- function(input, output) {
      
       g2 <- ggplot(state()$samples) + geom_line(mapping=aes(x=x, y=y, group=sample), alpha=0.2) +
         geom_segment(data=state()$sample_means, aes(x=barx, y=0, xend=barx, yend=bary), col='red', alpha=0.2) +
-        theme_minimal() + theme(axis.title = element_blank(),
+        theme_minimal(base_size=14) + theme(axis.title = element_blank(),
                                 axis.text = element_blank(),
                                 axis.ticks = element_blank()) +
         scale_x_continuous(expand=c(0,0)) +
@@ -84,7 +84,7 @@ server <- function(input, output) {
       g3b <- ggplot(state()$sample_means) + geom_density(mapping=aes(x=barx), adjust=1.5, fill='red', alpha=0.4, col=NA) +
         scale_x_continuous(limits = c(popn()$from, popn()$to), expand=c(0,0)) +
         scale_y_continuous(expand=c(0,0,0,0.002)) +
-        theme_minimal() + theme(axis.title = element_blank(),
+        theme_minimal(base_size=14) + theme(axis.title = element_blank(),
                                 axis.text = element_blank(),
                                 axis.ticks = element_blank()) +
         ggtitle("Distribution of sample means")
