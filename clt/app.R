@@ -69,6 +69,7 @@ server <- function(input, output) {
                                 axis.text = element_blank(),
                                 axis.ticks = element_blank()) +
         scale_x_continuous(expand=c(0,0)) +
+        scale_y_continuous(expand=c(0,0,0,0.002)) +
         ggtitle("Population")
      
       g2 <- ggplot(state()$samples) + geom_line(mapping=aes(x=x, y=y, group=sample), alpha=0.2) +
@@ -77,10 +78,12 @@ server <- function(input, output) {
                                 axis.text = element_blank(),
                                 axis.ticks = element_blank()) +
         scale_x_continuous(expand=c(0,0)) +
+        scale_y_continuous(expand=c(0,0,0,0.002)) +
         ggtitle("Samples")
       
       g3b <- ggplot(state()$sample_means) + geom_density(mapping=aes(x=barx), adjust=1.5, fill='red', alpha=0.4, col=NA) +
         scale_x_continuous(limits = c(popn()$from, popn()$to), expand=c(0,0)) +
+        scale_y_continuous(expand=c(0,0,0,0.002)) +
         theme_minimal() + theme(axis.title = element_blank(),
                                 axis.text = element_blank(),
                                 axis.ticks = element_blank()) +
