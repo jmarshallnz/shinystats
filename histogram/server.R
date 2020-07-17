@@ -1,4 +1,5 @@
 library(shiny)
+library(ggplot2)
 
 # generate our data
 get_data <- function(n) {
@@ -6,7 +7,7 @@ get_data <- function(n) {
   nn <- as.numeric(rmultinom(1, n, prob=rep(1/n_m, n_m)))
   mu <- rep(rnorm(n_m, sd=3), times=nn)
   r <- rnorm(n) + mu
-  r
+  data.frame(r=r)
 }
 
 shinyServer(function(input, output, session) {
@@ -18,20 +19,14 @@ shinyServer(function(input, output, session) {
     dat$data <- get_data(200)
   })
 
-  observeEvent(input$default_bw, {
-    updateSliderInput(session, "bins", value=length(hist(dat$data, plot=FALSE)$counts))
-    updateSliderInput(session, "bin_start", value=0.5)
-  })
-
   output$plot <- renderPlot({
 
-    x <- dat$data
-
-    par(mar=c(4,4,0,1))
-    bin_width <- diff(range(x))/(input$bins-1)
-    dx <- bin_width*(1-input$bin_start)
-    breaks <- seq(min(x)-dx, max(x)+bin_width-dx, length.out=input$bins+1)
-    hist(x, breaks=breaks, xlim=c(min(x)-bin_width, max(x)+bin_width), col='grey60', main="", xlab="Data")
+    ggplot(dat$data) +
+      geom_histogram(aes(x=r), bins=input$bins, boundary=input$bin_start, alpha=0.5) +
+      scale_x_continuous(expand=c(0,0)) +
+      scale_y_continuous(expand=c(0,0,0.05,0)) +
+      theme_bw(base_size = 15) +
+      labs(x="Data")
   })
 
 })
