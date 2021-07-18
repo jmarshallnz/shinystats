@@ -38,7 +38,8 @@ shinyUI(fluidPage(
     column(width=8, plotOutput("plot")),
     column(width=4, wellPanel(
       sliderInput("adjust", label="Bandwidth adjustment", min=-1, max=1, value=0, step=0.05),
-      actionButton("new", "New Dataset")
+      actionButton("dist", "New Distribution"),
+      actionButton("new", "New Sample")
     ))
   )
 ))
